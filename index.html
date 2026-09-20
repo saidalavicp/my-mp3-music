@@ -1,15 +1,15 @@
 <!DOCTYPE html>
-<html lang="ml">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ബർസാത്ത് മ്യൂസിക് പ്ലെയർ</title>
+    <title>Barsaat (1999) Music Player</title>
     <style>
         :root {
             --primary-color: #ff4757;
-            --bg-color: #2f3640;
-            --text-color: #f5f6fa;
-            --card-bg: #353b48;
+            --bg-color: #1e1e2f;
+            --text-color: #ffffff;
+            --card-bg: #2d2d44;
         }
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -22,77 +22,40 @@
             margin: 0;
             padding: 20px;
         }
-        h1 { margin-bottom: 30px; color: var(--primary-color); text-transform: uppercase; }
+        h1 { margin-bottom: 20px; color: var(--primary-color); text-align: center; font-size: 1.8rem; }
 
         #player-container {
             background-color: var(--card-bg);
-            border-radius: 15px;
+            border-radius: 20px;
             padding: 20px;
-            width: 90%;
-            max-width: 400px;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+            width: 100%;
+            max-width: 380px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
             text-align: center;
             margin-bottom: 20px;
         }
 
         #album-art {
-            width: 200px;
-            height: 200px;
-            border-radius: 50%;
+            width: 180px;
+            height: 180px;
+            border-radius: 10px;
             object-fit: cover;
             margin: 0 auto 20px;
             display: block;
-            border: 5px solid var(--text-color);
+            border: 4px solid var(--primary-color);
             box-shadow: 0 5px 15px rgba(0,0,0,0.5);
-            animation: rotate 20s linear infinite;
-            animation-play-state: paused;
         }
 
-        #album-art.playing {
-            animation-play-state: running;
-        }
-
-        @keyframes rotate {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-
-        #song-title { font-size: 1.4em; font-weight: bold; margin-bottom: 5px; }
-        #song-artist { font-size: 1.1em; color: #bdc3c7; margin-bottom: 20px; }
-
-        #controls {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 20px;
-            margin-bottom: 20px;
-        }
-
-        button {
-            background: none;
-            border: none;
-            color: var(--text-color);
-            font-size: 1.5em;
-            cursor: pointer;
-            transition: transform 0.2s, color 0.2s;
-        }
-        button:hover { color: var(--primary-color); transform: scale(1.1); }
-        button:active { transform: scale(0.95); }
-        #play-pause {
-            font-size: 3em;
-            background-color: var(--primary-color);
-            border-radius: 50%;
-            width: 70px; height: 70px;
-            display: flex; justify-content: center; align-items: center;
-        }
-        #play-pause:hover { background-color: #e84118; }
+        #song-title { font-size: 1.2rem; font-weight: bold; margin-bottom: 5px; }
+        #song-artist { font-size: 0.95rem; color: #b2bec3; margin-bottom: 20px; }
 
         #progress-container {
-            height: 5px;
-            background-color: #7f8c8d;
+            height: 6px;
+            background-color: #57606f;
             border-radius: 5px;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
             cursor: pointer;
+            overflow: hidden;
         }
         #progress-bar {
             height: 100%;
@@ -104,54 +67,87 @@
         #time-info {
             display: flex;
             justify-content: space-between;
-            font-size: 0.8em;
-            color: #bdc3c7;
+            font-size: 0.75rem;
+            color: #b2bec3;
+            margin-bottom: 15px;
         }
+
+        #controls {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 25px;
+            margin-bottom: 20px;
+        }
+
+        button {
+            background: none;
+            border: none;
+            color: var(--text-color);
+            font-size: 1.3rem;
+            cursor: pointer;
+            transition: transform 0.2s, color 0.2s;
+        }
+        button:hover { color: var(--primary-color); transform: scale(1.1); }
+        #play-pause {
+            font-size: 2.2rem;
+            background-color: var(--primary-color);
+            border-radius: 50%;
+            width: 60px; height: 60px;
+            display: flex; justify-content: center; align-items: center;
+            box-shadow: 0 4px 10px rgba(255, 71, 87, 0.4);
+        }
+        #play-pause:hover { background-color: #ff6b81; color: white; }
 
         #download-btn {
             display: inline-block;
-            background-color: #27ae60;
+            background-color: #2ed573;
             color: white;
             padding: 10px 20px;
             text-decoration: none;
-            border-radius: 5px;
+            border-radius: 30px;
             font-weight: bold;
+            font-size: 0.9rem;
             transition: background-color 0.2s;
-            margin-top: 10px;
+            box-shadow: 0 4px 10px rgba(46, 213, 115, 0.3);
         }
-        #download-btn:hover { background-color: #219150; }
+        #download-btn:hover { background-color: #26af5f; }
 
         #song-list {
-            width: 90%;
-            max-width: 400px;
+            width: 100%;
+            max-width: 380px;
             background-color: var(--card-bg);
-            border-radius: 15px;
+            border-radius: 20px;
             padding: 10px;
             list-style: none;
             margin: 0;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            box-sizing: border-box;
         }
         #song-list li {
-            padding: 10px;
-            border-bottom: 1px solid #7f8c8d;
+            padding: 12px 15px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
             cursor: pointer;
             transition: background-color 0.2s;
-            display: flex; justify-content: space-between; align-items: center;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.9rem;
+            border-radius: 10px;
         }
         #song-list li:last-child { border-bottom: none; }
-        #song-list li:hover { background-color: #4a5263; }
-        #song-list li.active { background-color: var(--primary-color); color: white; }
-        #song-list li span:last-child { font-size: 0.8em; opacity: 0.7; }
-
+        #song-list li:hover { background-color: rgba(255,255,255,0.05); }
+        #song-list li.active { background-color: var(--primary-color); color: white; font-weight: bold; }
     </style>
 </head>
 <body>
 
-    <h1>ബർസാത്ത് ഗാനങ്ങൾ</h1>
+    <h1>Barsaat (1999)</h1>
 
     <div id="player-container">
-        <img id="album-art" src="" alt="Album Art"> <!-- ഇവിടെയാണ് ആൽബം ഫോട്ടോ വരുന്നത് -->
-        <div id="song-title">പാട്ടിന്റെ പേര്</div>
-        <div id="song-artist">Barsaat</div>
+        <img id="album-art" src="" alt="Album Art">
+        <div id="song-title">Song Title</div>
+        <div id="song-artist">Barsaat (1999)</div>
 
         <div id="progress-container">
             <div id="progress-bar"></div>
@@ -167,14 +163,11 @@
             <button id="next"><i class="fas fa-step-forward"></i></button>
         </div>
 
-        <a id="download-btn" href="#" download target="_blank"><i class="fas fa-download"></i> പാട്ട് ഡൗൺലോഡ് ചെയ്യുക</a>
+        <a id="download-btn" href="#" download target="_blank"><i class="fas fa-download"></i> Download Song</a>
     </div>
 
-    <ul id="song-list">
-        <!-- പാട്ടുകളുടെ ലിസ്റ്റ് ഇവിടെ JS വഴി വരും -->
-    </ul>
+    <ul id="song-list"></ul>
 
-    <!-- ഫോണ്ട് ഓസം ഐക്കണുകൾക്കായി -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
     <script>
@@ -192,66 +185,53 @@
         const downloadBtn = document.getElementById('download-btn');
         const songListUl = document.getElementById('song-list');
 
-        // --------------------------------------------------------------------------------
-        // 7 പാട്ടുകളുടെ വിവരങ്ങൾ ഇവിടെ ചേർക്കുക (മാറ്റം വരുത്തേണ്ട ഭാഗം)
-        // --------------------------------------------------------------------------------
         const songs = [
             {
-                title: "Barsaat Mein Hum Se Mile", // പാട്ടിന്റെ പേര്
-                artist: "Barsaat (1949)",
-                src: "YOUR_MP3_LINK_1.mp3", // ഇവിടെ പാട്ടിന്റെ ഓൺലൈൻ ലിങ്ക് നൽകുക
-                img: "YOUR_ALBUM_IMAGE_LINK_1.jpg"  // ഇവിടെ ആൽബം ഫോട്ടോയുടെ ലിങ്ക് നൽകുക
+                title: "Humko Hilti Hui",
+                src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
+                img: "https://picsum.photos/300/300?random=1"
             },
             {
-                title: "Hawa Mein Udta Jaye",
-                artist: "Barsaat (1949)",
-                src: "YOUR_MP3_LINK_2.mp3",
-                img: "YOUR_ALBUM_IMAGE_LINK_2.jpg"
+                title: "Jatt Lehanga",
+                src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3",
+                img: "https://picsum.photos/300/300?random=2"
             },
             {
-                title: "Jiya Beqaraar Hai",
-                artist: "Barsaat (1949)",
-                src: "YOUR_MP3_LINK_3.mp3",
-                img: "YOUR_ALBUM_IMAGE_LINK_3.jpg"
+                title: "Dil Mein Basake",
+                src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3",
+                img: "https://picsum.photos/300/300?random=3"
             },
             {
-                title: "Mujhe Kisi Se Pyaar Ho Gaya",
-                artist: "Barsaat (1949)",
-                src: "YOUR_MP3_LINK_4.mp3",
-                img: "YOUR_ALBUM_IMAGE_LINK_4.jpg"
+                title: "Aapke Pyaar Mein",
+                src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3",
+                img: "https://picsum.photos/300/300?random=4"
             },
             {
-                title: "Patli Kamar Hai",
-                artist: "Barsaat (1949)",
-                src: "YOUR_MP3_LINK_5.mp3",
-                img: "YOUR_ALBUM_IMAGE_LINK_5.jpg"
+                title: "Pardesi Pardesi",
+                src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-5.mp3",
+                img: "https://picsum.photos/300/300?random=5"
             },
             {
-                title: "Chhod Gaye Baalam",
-                artist: "Barsaat (1949)",
-                src: "YOUR_MP3_LINK_6.mp3",
-                img: "YOUR_ALBUM_IMAGE_LINK_6.jpg"
+                title: "Nahi Yeh Ho Nahi",
+                src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-6.mp3",
+                img: "https://picsum.photos/300/300?random=6"
             },
             {
-                title: "Bichhade Hue Pardesi",
-                artist: "Barsaat (1949)",
-                src: "YOUR_MP3_LINK_7.mp3",
-                img: "YOUR_ALBUM_IMAGE_LINK_7.jpg"
+                title: "Ishq Hua",
+                src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-7.mp3",
+                img: "https://picsum.photos/300/300?random=7"
             }
         ];
-        // --------------------------------------------------------------------------------
-        // (മാറ്റം വരുത്തേണ്ട ഭാഗം ഇവിടെ അവസാനിക്കുന്നു)
-        // --------------------------------------------------------------------------------
 
         let songIndex = 0;
         let isPlaying = false;
 
         function loadSong(song) {
             songTitle.innerText = song.title;
-            songArtist.innerText = song.artist;
+            songArtist.innerText = "Barsaat (1999)";
             audio.src = song.src;
             albumArtImg.src = song.img;
-            downloadBtn.href = song.src; // ഡൗൺലോഡ് ലിങ്ക് സെറ്റ് ചെയ്യുന്നു
+            downloadBtn.href = song.src;
             updateSongListActive();
         }
 
@@ -268,14 +248,12 @@
         function playSong() {
             isPlaying = true;
             playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
-            albumArtImg.classList.add('playing');
-            audio.play();
+            audio.play().catch(e => console.log("Playback error:", e));
         }
 
         function pauseSong() {
             isPlaying = false;
             playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
-            albumArtImg.classList.remove('playing');
             audio.pause();
         }
 
@@ -297,14 +275,14 @@
 
         audio.addEventListener('timeupdate', (e) => {
             const { duration, currentTime } = e.srcElement;
-            const progressPercent = (currentTime / duration) * 100;
-            progressBar.style.width = `${progressPercent}%`;
+            if (duration) {
+                const progressPercent = (currentTime / duration) * 100;
+                progressBar.style.width = `${progressPercent}%`;
 
-            let currentMinutes = Math.floor(currentTime / 60);
-            let currentSeconds = Math.floor(currentTime % 60);
-            currentTimeSpan.innerText = `${currentMinutes}:${currentSeconds < 10 ? '0' : ''}${currentSeconds}`;
+                let currentMinutes = Math.floor(currentTime / 60);
+                let currentSeconds = Math.floor(currentTime % 60);
+                currentTimeSpan.innerText = `${currentMinutes}:${currentSeconds < 10 ? '0' : ''}${currentSeconds}`;
 
-            if(duration) {
                 let durationMinutes = Math.floor(duration / 60);
                 let durationSeconds = Math.floor(duration % 60);
                 totalDurationSpan.innerText = `${durationMinutes}:${durationSeconds < 10 ? '0' : ''}${durationSeconds}`;
@@ -312,10 +290,12 @@
         });
 
         progressContainer.addEventListener('click', (e) => {
-            const width = this.clientWidth;
+            const width = progressContainer.clientWidth;
             const clickX = e.offsetX;
             const duration = audio.duration;
-            audio.currentTime = (clickX / width) * duration;
+            if (duration) {
+                audio.currentTime = (clickX / width) * duration;
+            }
         });
 
         audio.addEventListener('ended', () => {
@@ -324,11 +304,10 @@
             playSong();
         });
 
-        // പാട്ടുകളുടെ ലിസ്റ്റ് ഉണ്ടാക്കുന്നു
         function initSongList() {
             songs.forEach((song, index) => {
                 const li = document.createElement('li');
-                li.innerHTML = `<span>${song.title}</span> <span>${song.artist}</span>`;
+                li.innerHTML = `<span>${song.title}</span> <i class="fas fa-music"></i>`;
                 li.addEventListener('click', () => {
                     songIndex = index;
                     loadSong(songs[songIndex]);
@@ -338,11 +317,9 @@
             });
         }
 
-        // ആദ്യത്തെ പാട്ട് ലോഡ് ചെയ്യുന്നു
         loadSong(songs[songIndex]);
         initSongList();
-
     </script>
-
 </body>
-</html>
+                                                                     </html>
+                                                                     
