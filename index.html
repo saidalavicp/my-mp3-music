@@ -125,19 +125,26 @@
             box-sizing: border-box;
         }
         #song-list li {
-            padding: 12px 15px;
+            padding: 10px 15px;
             border-bottom: 1px solid rgba(255,255,255,0.1);
             cursor: pointer;
             transition: background-color 0.2s;
             display: flex;
-            justify-content: space-between;
             align-items: center;
+            gap: 15px;
             font-size: 0.9rem;
             border-radius: 10px;
         }
         #song-list li:last-child { border-bottom: none; }
         #song-list li:hover { background-color: rgba(255,255,255,0.05); }
         #song-list li.active { background-color: var(--primary-color); color: white; font-weight: bold; }
+
+        .list-thumb {
+            width: 40px;
+            height: 40px;
+            border-radius: 6px;
+            object-fit: cover;
+        }
     </style>
 </head>
 <body>
@@ -185,42 +192,15 @@
         const downloadBtn = document.getElementById('download-btn');
         const songListUl = document.getElementById('song-list');
 
+        // എല്ലാ പാട്ടുകൾക്കും ഒരേ 'album.jpg' ഫോട്ടോ തന്നെ നൽകിയിരിക്കുന്നു
         const songs = [
-            {
-                title: "Humko Hilti Hui",
-                src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
-                img: "https://picsum.photos/300/300?random=1"
-            },
-            {
-                title: "Jatt Lehanga",
-                src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3",
-                img: "https://picsum.photos/300/300?random=2"
-            },
-            {
-                title: "Dil Mein Basake",
-                src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3",
-                img: "https://picsum.photos/300/300?random=3"
-            },
-            {
-                title: "Aapke Pyaar Mein",
-                src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3",
-                img: "https://picsum.photos/300/300?random=4"
-            },
-            {
-                title: "Pardesi Pardesi",
-                src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-5.mp3",
-                img: "https://picsum.photos/300/300?random=5"
-            },
-            {
-                title: "Nahi Yeh Ho Nahi",
-                src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-6.mp3",
-                img: "https://picsum.photos/300/300?random=6"
-            },
-            {
-                title: "Ishq Hua",
-                src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-7.mp3",
-                img: "https://picsum.photos/300/300?random=7"
-            }
+            { title: "Song 1 - Barsaat", src: "song1.mp3", img: "album.jpg" },
+            { title: "Song 2 - Barsaat", src: "song2.mp3", img: "album.jpg" },
+            { title: "Song 3 - Barsaat", src: "song3.mp3", img: "album.jpg" },
+            { title: "Song 4 - Barsaat", src: "song4.mp3", img: "album.jpg" },
+            { title: "Song 5 - Barsaat", src: "song5.mp3", img: "album.jpg" },
+            { title: "Song 6 - Barsaat", src: "song6.mp3", img: "album.jpg" },
+            { title: "Song 7 - Barsaat", src: "song7.mp3", img: "album.jpg" }
         ];
 
         let songIndex = 0;
@@ -307,7 +287,10 @@
         function initSongList() {
             songs.forEach((song, index) => {
                 const li = document.createElement('li');
-                li.innerHTML = `<span>${song.title}</span> <i class="fas fa-music"></i>`;
+                li.innerHTML = `
+                    <img src="${song.img}" class="list-thumb" alt="Thumbnail">
+                    <span>${song.title}</span>
+                `;
                 li.addEventListener('click', () => {
                     songIndex = index;
                     loadSong(songs[songIndex]);
@@ -321,5 +304,5 @@
         initSongList();
     </script>
 </body>
-                                                                     </html>
-                                                                     
+            </html>
+    
